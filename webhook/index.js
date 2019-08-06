@@ -24,7 +24,8 @@ function getContent(e) {
   }
   lines = file.split('\n');
   let h1reg = /^# .+$/gm, h2reg = /^## .+$/gm, authorreg = /author:[^\n]*/gm;
-  others = lines.filter((e) => {return !e.match(h1reg) && !e.match(h2reg) && !e.match(authorreg));
+  lines = lines.filter((e) => {return !e.match(authorreg));
+  others = lines.filter((e) => {return !e.match(h1reg) && !e.match(h2reg));
   let title = lines[0];
   let filename = e.replace('docs/', '');
   if (!title.match(h1reg)) {
