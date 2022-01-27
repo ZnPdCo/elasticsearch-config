@@ -24,8 +24,8 @@ function getContent(e) {
   }
   lines = file.split('\n');
   let h1reg = /^# .+$/gm, h2reg = /^## .+$/gm, authorreg = /author:[^\n]*/gm;
-  lines = lines.filter((e) => {return !e.match(authorreg));
-  others = lines.filter((e) => {return !e.match(h1reg) && !e.match(h2reg));
+  lines = lines.filter((e) => {return !e.match(authorreg)});
+  others = lines.filter((e) => {return !e.match(h1reg) && !e.match(h2reg)});
   let title = lines[0];
   let filename = e.replace('docs/', '');
   if (!title.match(h1reg)) {
@@ -147,3 +147,4 @@ console.log(event.payload.ref);
 }
  });
 })
+

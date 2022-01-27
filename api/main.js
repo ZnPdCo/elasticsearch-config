@@ -24,10 +24,10 @@ app.get('/status', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-  if (!req.headers.referer || req.headers.referer.indexOf('oi-wiki.org') < 0) {
-    res.send([]);
-    return;
-  }
+  // if (!req.headers.referer || req.headers.referer.indexOf('oi-wiki.org') < 0) {
+  //  res.send([]);
+    //return;
+  //}
   // console.log(req.headers);
   if (!req.query.s) {
     res.send([]);
@@ -117,3 +117,4 @@ app.get('/', function(req, res) {
 app.listen(app.get('port'), function() {
   console.log('Search server running on port ' + app.get('port'));
 });
+

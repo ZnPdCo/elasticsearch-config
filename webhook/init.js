@@ -1,3 +1,4 @@
+
 const fs = require("fs");
 let remark = require("remark");
 const strip = require("strip-markdown-math");
@@ -12,8 +13,8 @@ var client = new elasticsearch.Client({
   log: "trace"
 });
 
-// modified = String(fs.readFileSync('/home/ubuntu/OI-wiki/mkdocs.yml')).split('\n').filter((e => {return e.match(/md$/)})).map(e =>'docs/' + e.split(':')[1].slice(1));
-modified = String(fs.readFileSync('/home/ubuntu/OI-wiki/mkdocs.yml')).split('\n').slice(100, 300).filter((e => {return e.match(/md$/)})).map(e =>'docs/' + e.split(':')[1].slice(1));
+modified = String(fs.readFileSync('/home/ubuntu/OI-wiki/mkdocs.yml')).split('\n').filter((e => {return e.match(/md$/)})).map(e =>'docs/' + e.split(':')[1].slice(1));
+// modified = String(fs.readFileSync('/home/ubuntu/OI-wiki/mkdocs.yml')).split('\n').slice(100, 300).filter((e => {return e.match(/md$/)})).map(e =>'docs/' + e.split(':')[1].slice(1));
 
 let ops = [],
   yml = "";
