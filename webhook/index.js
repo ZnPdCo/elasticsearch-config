@@ -31,7 +31,7 @@ function getContent(e) {
   if (!title.match(h1reg)) {
     if (!yml) yml = String(fs.readFileSync('/home/ubuntu/OI-wiki/mkdocs.yml')).split('\n');
     yml.forEach((cur) => {
-      if (cur.indexOf(filename) > -1) {
+      if (cur.split(': ')[1] == filename) {
         title = cur.split(':')[0].replace(/^\s+- /m, '');
       }
     });

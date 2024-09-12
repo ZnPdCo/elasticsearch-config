@@ -40,7 +40,7 @@ function getContent(e) {
         "\n"
       );
     yml.forEach(cur => {
-      if (cur.indexOf(filename) > -1) {
+      if (cur.split(': ')[1] == filename) {
         title = cur.split(":")[0].replace(/^\s+- /m, "");
       }
     });
