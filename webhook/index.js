@@ -86,7 +86,7 @@ function getContent(filename, data) {
  */
 function updateContent(modified, removed) {
   const file = String(fs.readFileSync(`${articlePath}/mkdocs.yml`));
-  const data = YAML.parse(file);
+  const data = YAML.parse(file.replaceAll('!!python/name:', ''));
   let ops = [];
   modified.forEach((filename) => {
     ops.push({ index: { _index: 'oiwiki', _type: 'article', _id: filename } });
@@ -160,7 +160,7 @@ function init() {
   exec(`curl -X DELETE "http://${esHost}/oiwiki"`);
   let modified = [];
   const file = String(fs.readFileSync(`${articlePath}/mkdocs.yml`));
-  const data = YAML.parse(file);
+  const data = YAML.parse(file.replaceAll('!!python/name:', ''));
   traversalArticle(data['nav'], (key, value) => modified.push(value));
   updateContent(modified, []);
 }
