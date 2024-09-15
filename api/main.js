@@ -5,6 +5,10 @@ var client = new elasticsearch.Client({
 const express = require('express');
 const app     = express();
 
+function count(str) {
+  return str.split('<em>').length - 1;
+}
+
 app.set('port', process.env.PORT || 8000);
 
 app.get('/status', function(req, res) {
@@ -100,10 +104,15 @@ app.get('/', function(req, res) {
   .then(results => {
     results = results.hits.hits;
     results = results.map((e) => {
+      let highlight = [];
+      if(!e.highlight.content) highlight = e.highlight.h2;
+      else if(!e.highlight.h2) highlight = e.highlight.content;
+      else if(count(e.highlight.content[0]) >= count(e.highlight.h2[0])) highlight = e.highlight.content;
+      else highlight = e.highlight.h2;
       return {
         url: e._source.url,
         title: e._source.title,
-        highlight: e.highlight.content
+        highlight: highlight
       }
     });
     res.send(results);
