@@ -6,7 +6,15 @@ const express = require('express');
 const app     = express();
 
 function count(str) {
-  return str.split('<em>').length - 1;
+  const regex = /<em>(.*?)<\/em>/g;
+  let len = 0;
+  let match;
+
+  while ((match = regex.exec(str)) !== null) {
+    len += match[1].length;
+  }
+
+  return len;
 }
 
 app.set('port', process.env.PORT || 8000);
