@@ -1,5 +1,30 @@
 # elasticsearch-config
 
+部署：
+
+```
+npm install
+git clone https://github.com/OI-wiki/OI-wiki.git /home/ubuntu/OI-wiki
+```
+
+初始化并启动 webhook：
+
+```
+npm run webhook
+```
+
+测试：
+
+```
+npm run test
+```
+
+启动 api 接口：
+
+```
+npm run serve
+```
+
 统计：
 
 ```

@@ -1,0 +1,28 @@
+{
+  "name": "elasticsearch-config",
+  "version": "1.0.0",
+  "description": "search for OI-wiki",
+  "main": "webhook/index.js",
+  "scripts": {
+    "serve": "node api/main.js",
+    "webhook": "node webhook/index.js",
+    "test": "node webhook/test.js"
+  },
+  "keywords": [
+    "OI",
+    "wiki",
+    "ACM-ICPC"
+  ],
+  "author": "OI Wiki Team",
+  "license": "ISC",
+  "dependencies": {
+    "elasticsearch": "^16.7.3",
+    "express": "^4.21.0",
+    "github-webhook-handler": "^1.0.0",
+    "remark": "^12.0.0",
+    "remark-math": "^3.0.0",
+    "simple-git": "^3.26.0",
+    "strip-markdown-math": "^3.0.3",
+    "yaml": "^2.5.1"
+  }
+}
