@@ -5,6 +5,8 @@
 ```
 npm install
 git clone https://github.com/OI-wiki/OI-wiki.git /home/ubuntu/OI-wiki
+cd /home/ubuntu/OI-wiki
+git remote add gh https://github.com/OI-wiki/OI-wiki.git
 ```
 
 初始化并启动 webhook：
