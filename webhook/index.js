@@ -152,6 +152,9 @@ handler.on('push', (event) => {
     removed = [...removed].filter(e => e.startsWith('docs') && e.endsWith('md'));
     modified = [...modified].filter(e => e.startsWith('docs') && e.endsWith('md'));
 
+  	removed.forEach((file, index) => removed[index] = file.replace('docs/', ''));
+  	modified.forEach((file, index) => modified[index] = file.replace('docs/', ''));
+
     updateContent(modified, removed);
   });
 });
