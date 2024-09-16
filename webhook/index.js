@@ -3,10 +3,8 @@ var YAML = require('yaml');
 var createHandler = require('github-webhook-handler');
 var handler = createHandler({ path: '/MY_SECRET_PATH', secret: 'MY_SECRET_KEY' });
 const elasticsearch = require('elasticsearch');
-const esHost = 'localhost:9200';
-const articlePath = '/home/ubuntu/OI-wiki';
 var client = new elasticsearch.Client({
-  host: esHost,
+  host: 'localhost:9200',
 });
 
 
@@ -48,7 +46,7 @@ function traversalArticle(data, callback) {
 function getContent(filename, data) {
   let file;
   try {
-    file = String(fs.readFileSync(`${articlePath}/docs/` + filename));
+    file = String(fs.readFileSync(`/home/ubuntu/OI-wiki/docs/` + filename));
   } catch (e) {
     console.error(`Error reading file ${filename}:`, e);
     return ['', '', ''];
@@ -85,7 +83,7 @@ function getContent(filename, data) {
  * @param removed - Array of removed files
  */
 function updateContent(modified, removed) {
-  const file = String(fs.readFileSync(`${articlePath}/mkdocs.yml`));
+  const file = String(fs.readFileSync(`/home/ubuntu/OI-wiki/mkdocs.yml`));
   const data = YAML.parse(file.replaceAll('!!python/name:', ''));
   let ops = [];
   modified.forEach((filename) => {
@@ -160,9 +158,9 @@ handler.on('push', (event) => {
 });
 
 function init() {
-  exec(`curl -X DELETE "http://${esHost}/oiwiki"`);
+  exec(`curl -X DELETE "http://localhost:9200/oiwiki"`);
   let modified = [];
-  const file = String(fs.readFileSync(`${articlePath}/mkdocs.yml`));
+  const file = String(fs.readFileSync(`/home/ubuntu/OI-wiki/mkdocs.yml`));
   const data = YAML.parse(file.replaceAll('!!python/name:', ''));
   traversalArticle(data['nav'], (key, value) => modified.push(value));
   updateContent(modified, []);
