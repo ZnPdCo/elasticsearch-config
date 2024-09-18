@@ -113,10 +113,16 @@ app.get('/', function(req, res) {
     results = results.hits.hits;
     results = results.map((e) => {
       let highlight = [];
-      if(!e.highlight.content) highlight = e.highlight.h2;
-      else if(!e.highlight.h2) highlight = e.highlight.content;
-      else if(count(e.highlight.content[0]) >= count(e.highlight.h2[0])) highlight = e.highlight.content;
-      else highlight = e.highlight.h2;
+	  if (!e.highlight.content && !e.highlight.h2) {
+		highlight = [e._source.content.substring(0, 30)];
+	  } else if (e.highlight.content && e.highlight.h2) {
+		const contentCount = count(e.highlight.content[0]);
+		const h2Count = count(e.highlight.h2[0]);
+		
+		highlight = (contentCount >= h2Count) ? e.highlight.content : e.highlight.h2;
+	  } else {
+		highlight = e.highlight.content || e.highlight.h2;
+	  }
       return {
         url: e._source.url,
         title: e._source.title,
