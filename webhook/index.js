@@ -158,7 +158,7 @@ handler.on('push', (event) => {
 });
 
 function init() {
-  exec(`curl -X DELETE "http://localhost:9200/oiwiki"`);
+  exec(`bash build.sh`);
   let modified = [];
   const file = String(fs.readFileSync(`/home/ubuntu/OI-wiki/mkdocs.yml`));
   const data = YAML.parse(file.replaceAll('!!python/name:', ''));
