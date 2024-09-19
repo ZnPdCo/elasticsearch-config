@@ -1,6 +1,6 @@
 # elasticsearch-config
 
-部署需要有 es 环境并安装好 ik 与 pinyin 插件：
+部署需要有 es 环境并安装好 ik 与 pinyin 插件，并将 `/plugins/ik/config/stopword.dic` 与 `/plugins/ik/config/extra_stopword.dic` 内容清空（禁用停用词）：
 
 ```
 npm install
