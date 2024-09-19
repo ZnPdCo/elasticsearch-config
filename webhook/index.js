@@ -60,8 +60,9 @@ function getContent(filename, data) {
   traversalArticle(data['nav'], (key, value) => {
     if(value == filename) title = key;
   });
-  const h2 = lines.filter(e => e.match(h2reg));
+  const h2 = lines.filter(e => e.match(h2reg)).map(e => `<h2>${e.replace(/^## /, '')}</h2>`);
 
+  others = others.map(e => e.replace(/^##+ /, ''));
 
   remark.process(others.join('\n'), (err, file) => {
     if (err) {
@@ -72,6 +73,8 @@ function getContent(filename, data) {
       .replace('"', "")
       .replace("\\n\\n", "\\n");
   });
+
+  others.replace()
 
   return [title, others, h2];
 }
