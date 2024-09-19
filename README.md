@@ -1,6 +1,6 @@
 # elasticsearch-config
 
-部署：
+部署需要有 es 环境并安装好 ik 与 pinyin 插件：
 
 ```
 npm install
