@@ -58,9 +58,9 @@ function getContent(filename, data) {
   let title = lines[0] && lines[0].match(h1reg) ?
     lines[0].replace('# ', '') : '';
   traversalArticle(data['nav'], (key, value) => {
-    if(value == filename) title = key;
+    if (value == filename) title = key;
   });
-  const h2 = lines.filter(e => e.match(h2reg)).map(e => `<h2>${e.replace(/^## /, '')}</h2>`);
+  const h2 = lines.filter(e => e.match(h2reg)).map(e => e.replace(/^## /, ''));
 
   others = others.map(e => e.replace(/^##+ /, ''));
 
@@ -76,7 +76,7 @@ function getContent(filename, data) {
 
   others.replace()
 
-  return [title, others, h2];
+  return [title, others, h2.join('\n')];
 }
 
 /**
@@ -161,12 +161,13 @@ handler.on('push', (event) => {
 });
 
 function init() {
-  exec(`bash build.sh`);
-  let modified = [];
-  const file = String(fs.readFileSync(`/home/ubuntu/OI-wiki/mkdocs.yml`));
-  const data = YAML.parse(file.replaceAll('!!python/name:', ''));
-  traversalArticle(data['nav'], (key, value) => modified.push(value));
-  updateContent(modified, []);
+  exec(`bash build.sh`, () => {
+    let modified = [];
+    const file = String(fs.readFileSync(`/home/ubuntu/OI-wiki/mkdocs.yml`));
+    const data = YAML.parse(file.replaceAll('!!python/name:', ''));
+    traversalArticle(data['nav'], (key, value) => modified.push(value));
+    updateContent(modified, []);
+  });
 }
 
 init();

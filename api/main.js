@@ -5,18 +5,6 @@ var client = new elasticsearch.Client({
 const express = require('express');
 const app     = express();
 
-function count(str) {
-  const regex = /<em>(.*?)<\/em>/g;
-  let len = 0;
-  let match;
-
-  while ((match = regex.exec(str)) !== null) {
-    len += match[1].length;
-  }
-
-  return len;
-}
-
 app.set('port', process.env.PORT || 8000);
 
 app.get('/status', function(req, res) {
@@ -113,16 +101,11 @@ app.get('/', function(req, res) {
     results = results.hits.hits;
     results = results.map((e) => {
       let highlight = [];
-	  if (!e.highlight || (!e.highlight.content && !e.highlight.h2)) {
-		highlight = [e._source.content.substring(0, 30)];
-	  } else if (e.highlight.content && e.highlight.h2) {
-		const contentCount = count(e.highlight.content[0]);
-		const h2Count = count(e.highlight.h2[0]);
-		
-		highlight = (contentCount >= h2Count) ? e.highlight.content : e.highlight.h2;
-	  } else {
-		highlight = e.highlight.content || e.highlight.h2;
-	  }
+      if (!e.highlight || !e.highlight.content) {
+        highlight = [e._source.content.substring(0, 50)];
+      } else {
+        highlight = e.highlight.content;
+      }
       return {
         url: e._source.url,
         title: e._source.title,
