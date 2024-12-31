@@ -100,10 +100,16 @@ app.get('/', function(req, res) {
   .then(results => {
     results = results.hits.hits;
     results = results.map((e) => {
+      let highlight = [];
+      if (!e.highlight || !e.highlight.content) {
+        highlight = [e._source.content.substring(0, 50)];
+      } else {
+        highlight = e.highlight.content;
+      }
       return {
         url: e._source.url,
         title: e._source.title,
-        highlight: e.highlight.content
+        highlight: highlight
       }
     });
     res.send(results);
