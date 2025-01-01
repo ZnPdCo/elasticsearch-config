@@ -4,20 +4,46 @@ curl -H'Content-Type: application/json' -XPUT "http://localhost:9200/oiwiki" -d'
 	"settings": {
 		"analysis": {
 			"analyzer": {
-				"default": {
+				"pinyin_analyzer": {
 					"tokenizer": "ik_max_word",
-					"filter": "custom_pinyin"
+					"filter": "pinyin_filter"
 				},
-				"default_search": {
+				"pinyin_search_analyzer": {
 					"tokenizer": "ik_max_word"
 				}
 			},
 			"filter": {
-				"custom_pinyin": {
+				"pinyin_filter": {
 					"type": "pinyin",
 					"keep_original": true,
-					"limit_first_letter_length": 16
+					"limit_first_letter_length": 16,
+					"keep_joined_full_pinyin": true
 				}
+			}
+		}
+	},
+	"mappings": {
+		"properties": {
+			"content": {
+				"type": "text",
+				"analyzer": "pinyin_analyzer",
+				"search_analyzer": "pinyin_search_analyzer"
+			},
+			"h2": {
+				"type": "text",
+				"analyzer": "pinyin_analyzer",
+				"search_analyzer": "pinyin_search_analyzer"
+			},
+			"title": {
+				"type": "text",
+				"analyzer": "pinyin_analyzer",
+				"search_analyzer": "pinyin_search_analyzer"
+			},
+			"url": {
+				"type": "text"
+			},
+			"standard_content": {
+				"type": "text"
 			}
 		}
 	}

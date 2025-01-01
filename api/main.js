@@ -24,11 +24,6 @@ app.get('/status', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-  // if (!req.headers.referer || req.headers.referer.indexOf('oi-wiki.org') < 0) {
-  //  res.send([]);
-    //return;
-  //}
-  // console.log(req.headers);
   if (!req.query.s) {
     res.send([]);
     return;
@@ -37,7 +32,6 @@ app.get('/', function(req, res) {
   console.log(keyword);
   client.search({
     index: "oiwiki",
-    type: "article",
     from: 0,
     size: 12,
     body: {
@@ -77,6 +71,15 @@ app.get('/', function(req, res) {
                   query: keyword,
                   minimum_should_match: "75%",
                   boost: 3
+                }
+              }
+            },
+            {
+              match: {
+                standard_content: {
+                  query: keyword,
+                  minimum_should_match: "75%",
+                  boost: 2
                 }
               }
             }

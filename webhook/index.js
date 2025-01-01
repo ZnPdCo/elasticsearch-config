@@ -90,17 +90,18 @@ function updateContent(modified, removed) {
   const data = YAML.parse(file.replaceAll('!!python/name:', ''));
   let ops = [];
   modified.forEach((filename) => {
-    ops.push({ index: { _index: 'oiwiki', _type: 'article', _id: filename } });
+    ops.push({ index: { _index: 'oiwiki', _id: filename } });
     let [title, article, h2] = getContent(filename, data);
     ops.push({
       title: title,
       content: article,
       url: '/' + filename.replace('/index.md', '/').replace('.md', '/'),
       h2: h2,
+      standard_content: article,
     });
   });
   removed.forEach((filename) => {
-    ops.push({ delete: { _index: 'oiwiki', _type: 'article', _id: filename } });
+    ops.push({ delete: { _index: 'oiwiki', _id: filename } });
   });
   client.bulk({ body: ops, refresh: 'true' }, function (err, res) {
     if (err) {
