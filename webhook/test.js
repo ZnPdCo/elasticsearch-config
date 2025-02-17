@@ -50,6 +50,15 @@ const response = client.search({
           },
           {
             match: {
+              bold: {
+                query: keyword,
+                minimum_should_match: "75%",
+                boost: 3
+              }
+            }
+          },
+          {
+            match: {
               standard_content: {
                 query: keyword,
                 minimum_should_match: "75%",

@@ -52,9 +52,9 @@ function getContent(filename, data) {
     return ['', '', ''];
   }
 
-  const h1reg = /^# .+$/gm, h2reg = /^## .+$/gm, authorreg = /author:[^\n]*/gm;
+  const h1reg = /^# .+$/gm, h2reg = /^## .+$/gm, authorreg = /author:[^\n]*/gm, boldreg = /\*\*(.*?)\*\*|__(.*?)__/g;
   const lines = file.split('\n').filter(e => !e.match(authorreg));
-  let others = lines.filter((e) => !e.match(h1reg) && !e.match(h2reg));
+  let content = lines.filter((e) => !e.match(h1reg) && !e.match(h2reg));
   let title = lines[0] && lines[0].match(h1reg) ?
     lines[0].replace('# ', '') : '';
   traversalArticle(data['nav'], (key, value) => {
@@ -62,21 +62,28 @@ function getContent(filename, data) {
   });
   const h2 = lines.filter(e => e.match(h2reg)).map(e => e.replace(/^## /, ''));
 
-  others = others.map(e => e.replace(/^##+ /, ''));
+  let bold = "";
+  let match;
+  while ((match = boldreg.exec(file)) !== null) {
+    // match[1] is the content in **bold**, match[2] is the content in __bold__
+    bold += match[1] || match[2];
+  }
 
-  remark.process(others.join('\n'), (err, file) => {
+  content = content.map(e => e.replace(/^##+ /, ''));
+
+  remark.process(content.join('\n'), (err, file) => {
     if (err) {
       console.error('Remark processing error:', err);
       return;
     }
-    others = String(file)
+    content = String(file)
       .replace('"', "")
       .replace("\\n\\n", "\\n");
   });
 
-  others.replace()
+  content.replace()
 
-  return [title, others, h2.join('\n')];
+  return [title, content, h2.join('\n'), bold];
 }
 
 /**
@@ -91,12 +98,13 @@ function updateContent(modified, removed) {
   let ops = [];
   modified.forEach((filename) => {
     ops.push({ index: { _index: 'oiwiki', _id: filename } });
-    let [title, article, h2] = getContent(filename, data);
+    let [title, article, h2, bold] = getContent(filename, data);
     ops.push({
       title: title,
       content: article,
       url: '/' + filename.replace('/index.md', '/').replace('.md', '/'),
       h2: h2,
+      bold: bold,
       standard_content: article,
     });
   });

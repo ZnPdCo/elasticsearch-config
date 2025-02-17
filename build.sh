@@ -42,6 +42,11 @@ curl -H'Content-Type: application/json' -XPUT "http://localhost:9200/oiwiki" -d'
 			"url": {
 				"type": "text"
 			},
+			"bold": {
+				"type": "text",
+				"analyzer": "pinyin_analyzer",
+				"search_analyzer": "pinyin_search_analyzer"
+			},
 			"standard_content": {
 				"type": "text"
 			}
