@@ -4,11 +4,12 @@ var client = new elasticsearch.Client({
 });
 const express = require('express');
 const app     = express();
+const SEARCH_SECRET = process.env.SEARCH_SECRET || 'SEARCH_SECRET';
 
 app.set('port', process.env.PORT || 8000);
 
 app.get('/status', function(req, res) {
-  if (req.query.s == MY_SECRET_KEY) {
+  if (req.query.s == SEARCH_SECRET) {
     client.ping({
       requestTimeout: 1000,
     }, function (error) {

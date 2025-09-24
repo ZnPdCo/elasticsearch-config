@@ -10,11 +10,10 @@ const math = require('remark-math');
 const strip = require('strip-markdown-math');
 
 
-// const REPO_DIR = '/home/ubuntu/OI-wiki';
-const REPO_DIR = '/OI-wiki';
+const REPO_DIR = '/home/ubuntu/OI-wiki';
 const WEB_DIR = '/var/www/OI-wiki';
-const GITHUB_PATH = process.env.GITHUB_PATH || '/events';
-const GITHUB_SECRET = process.env.GITHUB_SECRET || 'asdlkfijawefojaewiofj';
+const GITHUB_PATH = process.env.GITHUB_PATH || '/GITHUB_PATH';
+const GITHUB_SECRET = process.env.GITHUB_SECRET || 'GITHUB_SECRET';
 
 const gitRepo = simpleGit({ baseDir: REPO_DIR });
 const gitWeb = simpleGit({ baseDir: WEB_DIR });
