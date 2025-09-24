@@ -43,7 +43,7 @@ app.get('/', function(req, res) {
                 title: {
                   query: keyword,
                   minimum_should_match: "75%",
-                  boost: 4
+                  boost: 3
                 }
               }
             },
@@ -52,7 +52,7 @@ app.get('/', function(req, res) {
                 h2: {
                   query: keyword,
                   minimum_should_match: "75%",
-                  boost: 3
+                  boost: 2
                 }
               }
             },
@@ -79,7 +79,7 @@ app.get('/', function(req, res) {
                 bold: {
                   query: keyword,
                   minimum_should_match: "75%",
-                  boost: 4
+                  boost: 2
                 }
               }
             },
@@ -88,7 +88,7 @@ app.get('/', function(req, res) {
                 standard_content: {
                   query: keyword,
                   minimum_should_match: "75%",
-                  boost: 2
+                  boost: 4
                 }
               }
             }
